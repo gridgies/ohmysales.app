@@ -104,9 +104,59 @@
             line-height: 1.7;
         }
 
+        /* Category Filters */
+        .category-filters {
+            background: white;
+            padding: 32px 0;
+            border-bottom: 1px solid #e8e8e8;
+            margin-bottom: 48px;
+        }
+
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 13px;
+            color: #6b6b6b;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-right: 8px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 1px solid #e8e8e8;
+            color: #6b6b6b;
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover {
+            border-color: #c27b7f;
+            color: #c27b7f;
+        }
+
+        .filter-btn.active {
+            background: #c27b7f;
+            border-color: #c27b7f;
+            color: white;
+        }
+
         /* Sales Section */
         .sales-section {
-            padding: 80px 0;
+            padding: 48px 0 80px;
         }
 
         .section-title {
@@ -192,6 +242,25 @@
             letter-spacing: -0.01em;
         }
 
+        /* Category Tags on Cards */
+        .category-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .category-tag {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            background: #f5f5f5;
+            color: #6b6b6b;
+            border-radius: 2px;
+            font-weight: 500;
+        }
+
         .sale-title {
             font-size: 14px;
             color: #6b6b6b;
@@ -259,46 +328,41 @@
         .newsletter-section p {
             font-size: 15px;
             color: #6b6b6b;
-            margin-bottom: 40px;
-            max-width: 480px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 32px;
         }
 
         .signup-form {
+            display: flex;
             max-width: 480px;
             margin: 0 auto;
-            display: flex;
             gap: 12px;
         }
 
         .signup-form input {
             flex: 1;
-            padding: 16px 20px;
+            padding: 14px 20px;
             border: 1px solid #e8e8e8;
             font-size: 14px;
             font-family: inherit;
-            background: #fafafa;
-            transition: all 0.3s ease;
+            transition: border-color 0.3s ease;
         }
 
         .signup-form input:focus {
             outline: none;
             border-color: #c27b7f;
-            background: white;
         }
 
         .signup-form button {
-            padding: 16px 32px;
+            padding: 14px 32px;
             background: #2c2c2c;
             color: white;
             border: none;
-            font-weight: 500;
             font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: background 0.3s ease;
             font-family: inherit;
         }
 
@@ -309,23 +373,22 @@
         /* Footer */
         footer {
             background: white;
+            padding: 60px 24px 40px;
             border-top: 1px solid #e8e8e8;
-            padding: 60px 24px;
             text-align: center;
         }
 
         footer h3 {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 500;
-            color: #2c2c2c;
             margin-bottom: 16px;
-            letter-spacing: -0.01em;
+            color: #2c2c2c;
         }
 
         footer p {
             font-size: 14px;
             color: #6b6b6b;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             line-height: 1.7;
         }
 
@@ -380,6 +443,15 @@
             .section-title {
                 font-size: 24px;
             }
+
+            .filters-container {
+                justify-content: flex-start;
+            }
+
+            .filter-label {
+                width: 100%;
+                margin-bottom: 8px;
+            }
         }
     </style>
 </head>
@@ -407,6 +479,20 @@
             <div class="hero-label">Singles' Day — 11. November</div>
             <h1>Kuratierte Fashion Sales</h1>
             <p>Eine sorgfältig zusammengestellte Übersicht der aktuellen Sales führender Online-Händler in Deutschland.</p>
+        </div>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="category-filters">
+        <div class="container">
+            <div class="filters-container">
+                <span class="filter-label">Filter:</span>
+                <button class="filter-btn active" data-category="all">Alle</button>
+                <button class="filter-btn" data-category="women">Women</button>
+                <button class="filter-btn" data-category="men">Men</button>
+                <button class="filter-btn" data-category="accessories">Accessories</button>
+                <button class="filter-btn" data-category="beauty">Beauty</button>
+            </div>
         </div>
     </div>
 
@@ -445,10 +531,26 @@
 
     <script>
         // ========================================
+        // 📂 CATEGORIES CONFIGURATION
+        // ========================================
+        // To add new categories, simply add them to this array
+        // The category buttons will be automatically generated
+        
+        const CATEGORIES = [
+            { id: 'women', label: 'Women' },
+            { id: 'men', label: 'Men' },
+            { id: 'accessories', label: 'Accessories' },
+            { id: 'beauty', label: 'Beauty' }
+            // Add more categories here as needed, e.g.:
+            // { id: 'kids', label: 'Kids' },
+            // { id: 'home', label: 'Home' },
+        ];
+
+        // ========================================
         // 🛍️ EDIT YOUR SALES HERE (Easy!)
         // ========================================
-        // To add/edit/remove sales, just modify this array
-        // Copy the format of existing sales below
+        // Each sale can have multiple categories
+        // Categories: 'women', 'men', 'accessories', 'beauty'
         
         const sales = [
             {
@@ -460,7 +562,8 @@
                 code: "Extra 10% mit Code SINGLE11",
                 endDate: "11. November 2025",
                 url: "https://www2.hm.com/de_de/sale.html",
-                featured: true
+                featured: true,
+                categories: ['women', 'men', 'accessories'] // Multiple categories allowed!
             },
             {
                 retailer: "Zara",
@@ -471,7 +574,8 @@
                 code: "Auf ausgewählte Artikel",
                 endDate: "11. November 2025",
                 url: "https://www.zara.com/de/de/sale-l1314.html",
-                featured: true
+                featured: true,
+                categories: ['women', 'men']
             },
             {
                 retailer: "Mango",
@@ -482,7 +586,20 @@
                 code: "Mit Code SINGLE",
                 endDate: "11. November 2025",
                 url: "https://shop.mango.com/de/de/sale",
-                featured: true
+                featured: true,
+                categories: ['women', 'men', 'accessories']
+            },
+            {
+                retailer: "Sephora",
+                logo: "",
+                image: "",
+                title: "Beauty Sale",
+                discount: "Bis zu 30%",
+                code: "Auf ausgewählte Marken",
+                endDate: "15. November 2025",
+                url: "https://www.sephora.de/sale",
+                featured: false,
+                categories: ['beauty'] // Beauty-only sale
             },
             {
                 retailer: "About You",
@@ -493,7 +610,8 @@
                 code: "Auf tausende Artikel",
                 endDate: "15. November 2025",
                 url: "https://www.aboutyou.de/sale",
-                featured: false
+                featured: false,
+                categories: ['women', 'men', 'accessories', 'beauty'] // All categories
             },
             {
                 retailer: "Zalando",
@@ -504,7 +622,8 @@
                 code: "Reduzierte Styles",
                 endDate: "20. November 2025",
                 url: "https://www.zalando.de/sale/",
-                featured: false
+                featured: false,
+                categories: ['women', 'men', 'accessories']
             },
             {
                 retailer: "COS",
@@ -515,7 +634,8 @@
                 code: "Ausgewählte Styles",
                 endDate: "30. November 2025",
                 url: "https://www.cosstores.com/de_de/sale.html",
-                featured: false
+                featured: false,
+                categories: ['women', 'men']
             },
             {
                 retailer: "Reserved",
@@ -526,24 +646,96 @@
                 code: "Auf ausgewählte Artikel",
                 endDate: "15. November 2025",
                 url: "https://www.reserved.com/de/de/",
-                featured: false
+                featured: false,
+                categories: ['women', 'men', 'accessories']
             }
-            // To add more sales, copy the format above and add here!
-            // Remember: put a comma after each sale (except the last one)
+            // To add more sales, copy the format above
+            // Don't forget to add the categories array!
         ];
 
         // ========================================
         // 🚫 DON'T EDIT BELOW (Website code)
         // ========================================
 
+        let currentFilter = 'all';
+
+        // Function to render category filters
+        function renderCategoryFilters() {
+            const container = document.querySelector('.filters-container');
+            const filterLabel = container.querySelector('.filter-label');
+            
+            // Clear existing buttons except label
+            container.innerHTML = '';
+            container.appendChild(filterLabel);
+            
+            // Add "All" button
+            const allBtn = document.createElement('button');
+            allBtn.className = 'filter-btn active';
+            allBtn.setAttribute('data-category', 'all');
+            allBtn.textContent = 'Alle';
+            container.appendChild(allBtn);
+            
+            // Add category buttons from CATEGORIES array
+            CATEGORIES.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.setAttribute('data-category', cat.id);
+                btn.textContent = cat.label;
+                container.appendChild(btn);
+            });
+            
+            // Add event listeners
+            container.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentFilter = btn.getAttribute('data-category');
+                    
+                    // Update active state
+                    container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // Re-render sales with filter
+                    renderSales(sales, currentFilter);
+                });
+            });
+        }
+
+        // Function to filter sales by category
+        function filterSales(sales, category) {
+            if (category === 'all') {
+                return sales;
+            }
+            return sales.filter(sale => sale.categories && sale.categories.includes(category));
+        }
+
         // Function to render sales
-        function renderSales(sales) {
+        function renderSales(allSales, filterCategory = 'all') {
             const grid = document.getElementById('salesGrid');
             grid.innerHTML = '';
+            
+            const filteredSales = filterSales(allSales, filterCategory);
 
-            sales.forEach(sale => {
+            if (filteredSales.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 0; color: #9b9b9b; font-size: 15px;">Keine Sales in dieser Kategorie gefunden.</div>';
+                return;
+            }
+
+            filteredSales.forEach(sale => {
                 const card = document.createElement('div');
                 card.className = `sale-card ${sale.featured ? 'featured' : ''}`;
+                
+                // Build category tags HTML
+                let categoryTagsHTML = '';
+                if (sale.categories && sale.categories.length > 0) {
+                    const categoryLabels = sale.categories.map(catId => {
+                        const category = CATEGORIES.find(c => c.id === catId);
+                        return category ? category.label : catId;
+                    });
+                    categoryTagsHTML = `
+                        <div class="category-tags">
+                            ${categoryLabels.map(label => `<span class="category-tag">${label}</span>`).join('')}
+                        </div>
+                    `;
+                }
                 
                 card.innerHTML = `
                     ${sale.image ? `<img src="${sale.image}" alt="${sale.title}" class="sale-image">` : ''}
@@ -553,6 +745,7 @@
                             ${sale.logo ? `<img src="${sale.logo}" alt="${sale.retailer}" class="retailer-logo">` : ''}
                             <div class="retailer-name">${sale.retailer}</div>
                         </div>
+                        ${categoryTagsHTML}
                         <div class="sale-title">${sale.title}</div>
                         <div class="discount-amount">${sale.discount}</div>
                         <div class="sale-meta">
@@ -568,9 +761,9 @@
                 grid.appendChild(card);
             });
 
-            // Update stats
-            document.getElementById('saleCount').textContent = sales.length;
-            const uniqueRetailers = new Set(sales.map(s => s.retailer));
+            // Update stats (based on filtered results)
+            document.getElementById('saleCount').textContent = filteredSales.length;
+            const uniqueRetailers = new Set(filteredSales.map(s => s.retailer));
             document.getElementById('retailerCount').textContent = uniqueRetailers.size;
         }
 
@@ -588,7 +781,8 @@
             // Example: fetch('/api/subscribe', { method: 'POST', body: JSON.stringify({ email }) })
         });
 
-        // Load sales when page loads
+        // Initialize the page
+        renderCategoryFilters();
         renderSales(sales);
     </script>
 </body>
